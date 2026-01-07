@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<header>
+    <a href="index.html" class="logo">E-Commerce</a>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search products...">
+        <button id="search-button">Search</button>
+    </div>
+    <div class="header-icons">
+        <a href="cart.html" class="cart-icon" id="cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+        </a>
+        <div class="user-menu" id="user-menu">
+            <div class="user-icon" id="user-icon">
+                <span>👤</span>
+                <div class="dropdown-menu">
+                    <a href="#" id="profile-link" class="dropdown-item">Profile</a>
+                    <a href="orders.html" class="dropdown-item">My Orders</a>
+                    <a href="#" id="logout-link" class="dropdown-item">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<h2>Your Shopping Cart</h2>
+
+<div id="cart-items"></div>
+
+<div class="cart-summary">
+    <p>Subtotal: <span id="subtotal">₹0</span></p>
+    <p>Total: <span id="total">₹0</span></p>
+
+    <button id="checkout-btn">Proceed to Checkout</button>
+</div>
+
+<!-- Checkout Panel -->
+<div id="checkout-panel" style="display:none; margin-top:20px;">
+
+    <h3>Checkout</h3>
+
+    <fieldset>
+        <legend>Shipping Address</legend>
+        <input id="ship-firstName" placeholder="First Name">
+        <input id="ship-lastName" placeholder="Last Name">
+        <input id="ship-email" placeholder="Email">
+        <input id="ship-phone" placeholder="Phone">
+        <input id="ship-address1" placeholder="Address Line 1">
+        <input id="ship-address2" placeholder="Address Line 2">
+        <input id="ship-city" placeholder="City">
+        <input id="ship-state" placeholder="State">
+        <input id="ship-postalCode" placeholder="Postal Code">
+        <input id="ship-country" placeholder="Country">
+    </fieldset>
+
+    <fieldset>
+        <legend>Billing Address</legend>
+        <input id="bill-firstName" placeholder="First Name">
+        <input id="bill-lastName" placeholder="Last Name">
+        <input id="bill-email" placeholder="Email">
+        <input id="bill-phone" placeholder="Phone">
+        <input id="bill-address1" placeholder="Address Line 1">
+        <input id="bill-city" placeholder="City">
+        <input id="bill-state" placeholder="State">
+        <input id="bill-postalCode" placeholder="Postal Code">
+        <input id="bill-country" placeholder="Country">
+    </fieldset>
+
+    <fieldset>
+        <legend>Payment</legend>
+        <select id="payment-method">
+            <option value="CREDIT_CARD">Credit Card</option>
+            <option value="DEBIT_CARD">Debit Card</option>
+            <option value="UPI">UPI</option>
+            <option value="NET_BANKING">Net Banking</option>
+        </select>
+    </fieldset>
+
+    <button id="pay-btn">Pay Now</button>
+
+    <!-- PayU Hidden Form -->
+    <form id="payuForm" method="post" style="display:none;">
+        <input name="key">
+        <input name="txnid">
+        <input name="amount">
+        <input name="productinfo">
+        <input name="firstname">
+        <input name="email">
+        <input name="hash">
+        <input name="surl">
+        <input name="furl">
+    </form>
+</div>
+
+<script type="module">
+    import { Cart } from './js/cart.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        await Cart.loadCart();
+        await Cart.renderCart();
+    });
+</script>
+
+</body>
+</html>

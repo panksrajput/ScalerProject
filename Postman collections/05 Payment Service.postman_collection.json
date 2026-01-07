@@ -1,0 +1,406 @@
+{
+	"info": {
+		"_postman_id": "b00295c5-4546-4b15-aa0d-52217449333d",
+		"name": "05 Payment Service",
+		"description": "API collection for managing payments in the e-commerce system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16943738",
+		"_collection_link": "https://winter-rocket-40604.postman.co/workspace/Panks~ec681aa6-8c12-42bb-a714-45b37e5cc0cc/collection/16943738-b00295c5-4546-4b15-aa0d-52217449333d?source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Create Payment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"orderId\": \"order_12345\",\n    \"orderNumber\": \"ORD-12345\",\n    \"userId\": 1,\n    \"amount\": 99.99,\n    \"currency\": \"USD\",\n    \"paymentMethod\": \"credit_card\",\n    \"paymentMethodId\": \"pm_123456789\",\n    \"description\": \"Payment for Order #ORD-12345\",\n    \"billingEmail\": \"customer@example.com\",\n    \"billingPhone\": \"+1234567890\",\n    \"billingName\": \"John Doe\",\n    \"cardNumber\": \"4242424242424242\",\n    \"cardExpMonth\": \"12\",\n    \"cardExpYear\": \"2025\",\n    \"cardCvc\": \"123\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/payments",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Payment by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-User-Id",
+						"value": "1001"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/payments/{{payment_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"payments",
+						"{{payment_id}}"
+					],
+					"variable": [
+						{
+							"key": "payment_id",
+							"value": "pay_12345"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Payment by Order ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-User-Id",
+						"value": "1001"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/payments/order/{{order_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"payments",
+						"order",
+						"{{order_id}}"
+					],
+					"variable": [
+						{
+							"key": "order_id",
+							"value": "order_12345"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Payments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-User-Id",
+						"value": "1001"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/payments?page=0&size=10&sort=createdAt,desc",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"payments"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "sort",
+							"value": "createdAt,desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Process Refund",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-User-Id",
+						"value": "1001"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/payments/{{payment_id}}/refund?amount=50.00&reason=Customer request",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"payments",
+						"{{payment_id}}",
+						"refund"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "50.00"
+						},
+						{
+							"key": "reason",
+							"value": "Customer request"
+						}
+					],
+					"variable": [
+						{
+							"key": "payment_id",
+							"value": "pay_12345"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Confirm Payment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-User-Id",
+						"value": "1001"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/payments/{{payment_id}}/confirm?paymentMethodId=pm_123456789",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"payments",
+						"{{payment_id}}",
+						"confirm"
+					],
+					"query": [
+						{
+							"key": "paymentMethodId",
+							"value": "pm_123456789"
+						}
+					],
+					"variable": [
+						{
+							"key": "payment_id",
+							"value": "pay_12345"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Payment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-User-Id",
+						"value": "1001"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/payments/{{payment_id}}/cancel",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"payments",
+						"{{payment_id}}",
+						"cancel"
+					],
+					"variable": [
+						{
+							"key": "payment_id",
+							"value": "pay_12345"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stripe Webhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Stripe-Signature",
+						"value": "t=1234567890,v1=signature_here"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"evt_123456789\",\n  \"object\": \"event\",\n  \"api_version\": \"2020-08-27\",\n  \"created\": 1234567890,\n  \"data\": {\n    \"object\": {\n      \"id\": \"pi_123456789\",\n      \"object\": \"payment_intent\",\n      \"amount\": 999,\n      \"currency\": \"usd\",\n      \"status\": \"succeeded\"\n    }\n  },\n  \"type\": \"payment_intent.succeeded\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/payments/webhook/stripe",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"payments",
+						"webhook",
+						"stripe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Payment Statistics",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/payments/stats?period=month",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"payments",
+						"stats"
+					],
+					"query": [
+						{
+							"key": "period",
+							"value": "month"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8085"
+		},
+		{
+			"key": "payment_id",
+			"value": "pay_8d73d3497ff8421bb773400184264fe9"
+		},
+		{
+			"key": "order_id",
+			"value": "order_12345"
+		}
+	]
+}

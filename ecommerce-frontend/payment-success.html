@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Successful</title>
+    <script type="module">
+        async function confirmPayment() {
+            const params = new URLSearchParams(window.location.search);
+
+            const payload = {
+                txnid: params.get("txnid"),
+                status: "SUCCESS"
+            };
+
+            await fetch("http://localhost:8086/api/payment/confirm", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            document.getElementById("msg").innerText =
+                "Payment successful! Redirecting to order details...";
+
+            setTimeout(() => {
+                window.location.href = "/orders.html";
+            }, 3000);
+        }
+
+        confirmPayment();
+    </script>
+</head>
+<body>
+<h2 id="msg">Processing payment...</h2>
+</body>
+</html>

@@ -1,0 +1,54 @@
+server:
+  port: ${SERVER_PORT:8761}
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: service-registry
+  security:
+    user:
+      name: ${EUREKA_ADMIN_USER:admin}
+      password: ${EUREKA_ADMIN_PASSWORD:admin123}
+
+eureka:
+  instance:
+    hostname: ${EUREKA_HOSTNAME:localhost}
+    prefer-ip-address: true
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    enable-self-preservation: false
+    wait-time-in-ms-when-sync-empty: 0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    root: INFO
+    com.netflix.eureka: INFO
+    com.netflix.discovery: INFO
+
+security:
+  basic:
+    enabled: true
+  user:
+    name: ${EUREKA_USER:admin}
+    password: ${EUREKA_PASSWORD:admin123}
+    role: USER
+
+eureka-server:
+  environment: development
+  enable-self-preservation: false
+  registry-sync-retry-wait-ms: 5000
+  peer-eureka-nodes-update-interval-ms: 10000

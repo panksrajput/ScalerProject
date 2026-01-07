@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine # Use a lightweight, stable PostgreSQL image
+    restart: always
+    environment:
+      # --- REQUIRED ENVIRONMENT VARIABLES ---
+      # Sets the superuser password (CHANGE THIS!)
+      POSTGRES_PASSWORD: postgres
+      # Sets the name of the default database (Optional, otherwise it uses the user name)
+      POSTGRES_DB: postgres
+      # Sets the initial user (Optional, defaults to postgres)
+      POSTGRES_USER: postgres
+    ports:
+      # Host:Container port mapping (Optional, allows access from the host machine)
+      - "5432:5432"
+    volumes:
+      # Persists the data in a Docker volume so it survives container restarts/updates
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
